@@ -89,4 +89,19 @@ import json
 export = {'conversations': bad}
 with open(file_path, 'w+') as jsonfile:
     json.dump(export, jsonfile, ensure_ascii=False)
-# bot.storage.drop() #delete database when programm ends
+
+    
+# Export the final result responses 
+# Basically this will be the raining set that the bot will be trained next time
+# For confirmation purposes the final.json and bad.json  are left to ckeck the result
+# The code below can also be in a seperate python file to avoid wasting time 
+for i in bad:
+   for j in result :
+        if j==i:
+            result.remove(j)
+
+file_path='./tests.json'
+import json
+export = {'conversations': result}
+with open(file_path, 'w+') as jsonfile:
+    json.dump(export, jsonfile, ensure_ascii=False)
