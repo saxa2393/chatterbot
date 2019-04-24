@@ -9,6 +9,8 @@ from chatterbot.conversation import Statement
 from chatterbot.response_selection import get_first_response
 from chatterbot.response_selection import get_most_frequent_response
 from flask import Flask, render_template, request
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -17,7 +19,6 @@ app = Flask(__name__)
 # We strore the new data (inout - response) in a json file
 # Every time we restart the ChatBot we retrain it we the new data
 # With this method we avoid unnecessary work load and we specify better the training set we  want
-
 bot = ChatBot(
     'Bot',
     read_only=True,
@@ -51,7 +52,11 @@ for statement in bot.storage.filter():
 def home():
     return render_template("index.html")
 
-# def bad_response(result):
+def get_bot_response(userText):
+    return botResponse
+
+def onClose(userText):
+    return botRespone
 
 @app.route("/get",methods=['GET','POST'])
 def get_bot_response():
@@ -69,10 +74,17 @@ def get_bot_response():
 # def getBad():
 @app.route("/bad",methods=['GET','POST'])
 def get_bad():
-    global globResponse
-    global globInput
-    userText = request.args.get('msg')
-    bad.append([globInput, globResponse])
+	userText1 = str(request.args.get('userText'))
+	botText1 =  str(request.args.get('botText'))
+	bad.append([userText1, botText1])
+	if request.method == 'POST':
+	    # Failure to return a redirect or render_templat
+	    return 'ok'
+	else:
+	    return 'problem'
+
+    
+    
 
 if __name__ == "__main__":
     app.run()
@@ -89,19 +101,4 @@ import json
 export = {'conversations': bad}
 with open(file_path, 'w+') as jsonfile:
     json.dump(export, jsonfile, ensure_ascii=False)
-
-    
-# Export the final result responses 
-# Basically this will be the raining set that the bot will be trained next time
-# For confirmation purposes the final.json and bad.json  are left to ckeck the result
-# The code below can also be in a seperate python file to avoid wasting time 
-for i in bad:
-   for j in result :
-        if j==i:
-            result.remove(j)
-
-file_path='./tests.json'
-import json
-export = {'conversations': result}
-with open(file_path, 'w+') as jsonfile:
-    json.dump(export, jsonfile, ensure_ascii=False)
+# bot.storage.drop() #delete database when programm ends
