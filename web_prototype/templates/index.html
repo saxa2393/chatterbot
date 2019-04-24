@@ -1,54 +1,100 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  </head>
-  <body>
-    <h1>Chatterbot Example</h1>
-    <div>
-      <div id="chatbox">
-        <p class="botText"><span>Hi! I'm Chatterbot.</span></p>
-      </div>
-      <div id="userInput">
-        <input id="textInput" type="text" name="msg" placeholder="Message">
-        <input id="buttonInput" type="submit" value="Send">
-        <input id="bad" type="button" value="bad">
-      </div>
-      <script>
-        var globText;
-        var globResponse;
-        function getBotResponse() {
-          var rawText = $("#textInput").val();
-          var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
-          $("#textInput").val("");
-          globText = rawText;
-          $("#chatbox").append(userHtml);
-          document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-          $.get("/get", { msg: rawText }).done(function(data) {
-            var botHtml = '<p class="botText"><span>' + data + '</span></p>';
-            globResponse = data;
-            $("#chatbox").append(botHtml);
-            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-          });
-        }
-        function getBadResponse() {
-          $.get("/bad", { msg: globText }).done(function(data) {
-            
-          });
-        }
-        $("#textInput").keypress(function(e) {
-            if(e.which == 13) {
-                getBotResponse();
-            }
-        });
-        $("#buttonInput").click(function() {
-          getBotResponse();
-        })
-        $('#bad').click(function(){
-          getBadResponse();
-        });
-      </script>
+
+<head>
+   <link rel="stylesheet" type="text/css" href="/static/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <h1>Chatterbot Example</h1>
+  <div id="chat">
+    <div id="chatbox">
+      <p class="botText"><span>Hi! I'm Chatterbot.</span></p>
     </div>
-  </body>
+    <div id="userInput">
+      <input id="textInput" type="text" name="msg" placeholder="Message">
+      <input id="buttonInput" type="submit" value="Send">
+    </div>
+    <script>
+      var globText;
+      var globResponse;
+      var p = 0;
+      var b = 0;
+
+      function createMessageWrapper() {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'wrapper'
+        return wrapper;
+      }
+
+      function createText(rawText, className) {
+        var text = document.createElement('p');
+        text.className = className;
+        
+        var textSpan = document.createElement('span');
+        textSpan.innerText = rawText;
+
+        $(text).append(textSpan);
+        return text;
+      }
+
+      function onBadBtnClick() {
+        var parent = $(this).parent('.wrapper');
+        var userText = parent.find('.userText').text();
+        var botText = parent.find('.botText').text();
+
+        console.log('Sending request with', { userText, botText })
+        $.get("/bad", {userText: userText,botText: botText}).done(function (data) {
+
+        });
+      }
+
+      function getBotResponse() {
+        var rawText = $("#textInput").val();
+
+        var wrapper = createMessageWrapper();
+
+        var userText = createText(rawText, 'userText')
+
+        $(wrapper).append($(userText));
+
+        $("#textInput").val("");
+        $("#chatbox").append($(wrapper));
+
+        document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
+
+        $.get("/get", { msg: rawText }).done(function (data) {
+          var botText = createText(data, 'botText')
+
+          $(wrapper).append($(botText));
+
+          var badBtn = document.createElement('button')
+          badBtn.className = 'bad';
+          badBtn.innerText = 'report';
+          $(badBtn).click(onBadBtnClick)
+          $(wrapper).append($(badBtn));
+
+          document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
+        });
+
+      }
+
+      $("#textInput").keypress(function (e) {
+        if (e.which == 13) {
+          getBotResponse();
+        }
+      });
+      $("#buttonInput").click(function () {
+        getBotResponse();
+      })
+
+
+        // $('bad').click(function(){
+        //   getBadResponse();
+        // });
+    </script>
+  </div>
+</body>
+
 </html>
