@@ -10,6 +10,13 @@ from chatterbot.response_selection import get_first_response
 from chatterbot.response_selection import get_most_frequent_response
 from flask import Flask, render_template, request
 
+
+
+# Create a new instance of a ChatBot
+# The chatbot we create has a read_only attribute to avoid training on time
+# We strore the new data (inout - response) in a json file
+# Every time we restart the ChatBot we retrain it we the new data
+# With this method we avoid unnecessary work load and we specify better the training set we  want
 bot = ChatBot(
     'Bot',
     read_only=True,
@@ -40,6 +47,10 @@ for statement in bot.storage.filter():
         result.append([statement.in_response_to, statement.text])
 
 
+# A function to return the json files we need
+# The result.json contains all the QA that the bot has been trained with as well as the new ones that have been given
+# The bad.json contains all the QA that the user has marked as unhelpful
+# The tetst.json = result-bad
 def export_json():    
     file_path='./result.json'
     import json
