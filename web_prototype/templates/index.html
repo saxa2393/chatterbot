@@ -76,8 +76,7 @@
           badBtn.innerText = 'report';
           $(badBtn).click(onBadBtnClick)
           $(badBtn).click(function(){
-            var resetBtn = document.getElementById(this.id);
-            resetBtn.disabled = "disabled";
+            this.disabled = "disabled";
           });
           $(wrapper).append($(badBtn));
 
