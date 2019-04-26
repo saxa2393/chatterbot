@@ -17,17 +17,15 @@
       <input id="buttonInput" type="submit" value="Send">
     </div>
     <script>
-      var globText;
-      var globResponse;
-      var p = 0;
-      var b = 0;
 
+       //create a message wrapper to connect easily every QA with a button
       function createMessageWrapper() {
         var wrapper = document.createElement('div');
         wrapper.className = 'wrapper'
         return wrapper;
       }
-
+       
+      //create a <span> element inside a <p> element and apende the given text(response)
       function createText(rawText, className) {
         var text = document.createElement('p');
         text.className = className;
@@ -38,19 +36,22 @@
         $(text).append(textSpan);
         return text;
       }
-
+      
+      // What to do when the user click report button. Take userText and botText and send them to python           
       function onBadBtnClick() {
         var parent = $(this).parent('.wrapper');
         var userText = parent.find('.userText').text();
         var botText = parent.find('.botText').text();
 
-        console.log('Sending request with', { userText, botText })
         $.get("/bad", {userText: userText,botText: botText}).done(function (data) {
 
         });
       }
-
+      
+      // After user input , it creates a  div element to append the input as well as the response
+      // the respone is taken from $.get("/get", { msg: rawText }).done(function (data) through python
       function getBotResponse() {
+        //takes input from the user      
         var rawText = $("#textInput").val();
 
         var wrapper = createMessageWrapper();
@@ -68,7 +69,8 @@
           var botText = createText(data, 'botText')
 
           $(wrapper).append($(botText));
-
+            
+          // Create the report button inside the div element
           var badBtn = document.createElement('button')
           badBtn.className = 'bad';
           badBtn.innerText = 'report';
@@ -88,11 +90,7 @@
       $("#buttonInput").click(function () {
         getBotResponse();
       })
-
-
-        // $('bad').click(function(){
-        //   getBadResponse();
-        // });
+       
     </script>
   </div>
 </body>
