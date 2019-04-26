@@ -46,3 +46,4 @@ if __name__ == "__main__":
 
 
 export_json()
+bot.storage.drop()
