@@ -25,7 +25,7 @@ bot = ChatBot(
     logic_adapters=[
         {
             "import_path": "chatterbot.logic.BestMatch",
-            'response_selection_method': get_most_frequent_response,
+            'response_selection_method': get_first_response,
             'threshold': 0.90
          }
     ]
