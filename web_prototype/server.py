@@ -29,13 +29,12 @@ def get_bot_response():
     result.append([globInput, globResponse])
     return globResponse
 
-@app.route("/bad",methods=['GET','POST'])
+@app.route("/bad",methods=['POST'])
 def get_bad():
 	userText1 = str(request.args.get('userText'))
 	botText1 =  str(request.args.get('botText'))
 	bad.append([userText1, botText1])
 	if request.method == 'POST':
-	    # Failure to return a redirect or render_templat
 	    return 'ok'
 	else:
 	    return 'problem'
