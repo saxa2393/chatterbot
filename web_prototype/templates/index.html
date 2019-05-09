@@ -43,7 +43,7 @@
         var userText = parent.find('.userText').text();
         var botText = parent.find('.botText').text();
 
-        $.post("/bad", {userText: userText,botText: botText}).done(function (data) {
+        $.post("/badResponse", {userText: userText,botText: botText}).done(function (data) {
 
         });
       }
@@ -65,7 +65,7 @@
 
         document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
 
-        $.get("/get", { msg: rawText }).done(function (data) {
+        $.get("/getResponse", { msg: rawText }).done(function (data) {
           var botText = createText(data, 'botText')
 
           $(wrapper).append($(botText));
