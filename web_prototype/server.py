@@ -25,7 +25,12 @@ def get_bot_response():
     global globInput
     userText = request.args.get('msg')
     globInput = userText
-    globResponse =  str(bot.get_response(userText))
+    getResp = bot.get_response(userText)
+    conf=getResp.confidence
+    if conf > 0.80 :
+        globResponse =  str(getResp)
+    else :
+        globResponse = 'ΔΕΝ ΚΑΤΑΛΑΒΑΙΝΩ, ΘΕΛΕΙΣ ΝΑ ΡΩΤΗΣΕΙΣ ΚΑΤΙ ΑΛΛΟ'
     result.append([globInput, globResponse])
     return globResponse
 
