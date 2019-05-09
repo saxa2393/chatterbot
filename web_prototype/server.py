@@ -19,7 +19,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/get",methods=['GET','POST'])
+@app.route("/getResponse",methods=['GET'])
 def get_bot_response():
     global globResponse
     global globInput
@@ -34,7 +34,7 @@ def get_bot_response():
     result.append([globInput, globResponse])
     return globResponse
 
-@app.route("/bad",methods=['POST'])
+@app.route("/badResponse",methods=['POST'])
 def get_bad():
 	userText1 = str(request.args.get('userText'))
 	botText1 =  str(request.args.get('botText'))
