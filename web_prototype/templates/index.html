@@ -18,7 +18,7 @@
     </div>
     <script>
 
-       //create a message wrapper to connect easily every QA with a button
+      //create a message wrapper to connect easily every QA with a button
       function createMessageWrapper() {
         var wrapper = document.createElement('div');
         wrapper.className = 'wrapper'
@@ -37,6 +37,14 @@
         return text;
       }
       
+      //A function to detect and return a link "http:...." inside a text       
+      function urlify(text) {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        var url = text.match(urlRegex);
+        return url;
+      }
+       
+       
       // What to do when the user click report button. Take userText and botText and send them to python           
       function onBadBtnClick() {
         var parent = $(this).parent('.wrapper');
@@ -66,7 +74,19 @@
         document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
 
         $.get("/getResponse", { msg: rawText }).done(function (data) {
-          var botText = createText(data, 'botText')
+          var myLink = urlify(String(data));
+          var botText = createText(data, 'botText');
+          
+          if (myLink!=null) {
+            var myText = $(botText).find('span').text();
+            var res = myText.replace(String(myLink), " ");
+            console.log(res);
+            $(botText).find('span').text(res);
+            var textLink = document.createElement('a');
+            $(textLink).attr('href', myLink); 
+            $(textLink).text("ΕΔΩ");
+            $($(botText)).append($(textLink));
+          }
 
           $(wrapper).append($(botText));
             
