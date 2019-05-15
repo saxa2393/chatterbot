@@ -51,7 +51,7 @@
         var userText = parent.find('.userText').text();
         var botText = parent.find('.botText').text();
 
-        $.post("/badResponse", {userText: userText,botText: botText}).done(function (data) {
+        $.get("/badResponse", {userText: userText,botText: botText}).done(function (data) {
 
         });
       }
