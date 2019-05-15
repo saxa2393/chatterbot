@@ -34,7 +34,7 @@ def get_bot_response():
     result.append([globInput, globResponse])
     return globResponse
 
-@app.route("/badResponse",methods=['POST'])
+@app.route("/badResponse",methods=['GET','POST'])
 def get_bad():
 	userText1 = str(request.args.get('userText'))
 	botText1 =  str(request.args.get('botText'))
