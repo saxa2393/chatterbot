@@ -8,9 +8,10 @@ from chatterbot.storage import SQLStorageAdapter
 from chatterbot.conversation import Statement
 from chatterbot.response_selection import get_first_response
 from chatterbot.response_selection import get_most_frequent_response
+from chatterbot.response_selection import get_random_response
 from flask import Flask, render_template, request
-
-
+from chatterbot.comparisons import JaccardSimilarity
+# from chatterbot.comparisons import LevenshteinDistance
 
 # Create a new instance of a ChatBot
 # The chatbot we create has a read_only attribute to avoid training on time
@@ -22,10 +23,16 @@ bot = ChatBot(
     read_only=True,
     storage_adapter='chatterbot.storage.SQLStorageAdapter',
     database_uri='sqlite:///web.db',
+    preprocessors=[
+        'chatterbot.preprocessors.clean_whitespace'
+    ],
     logic_adapters=[
         {
             "import_path": "chatterbot.logic.BestMatch",
-            'response_selection_method': get_first_response
+            "statement_comparison_function": "chatterbot.comparisons.LevenshteinDistance",
+            'response_selection_method': get_first_response,
+            'maximum_similarity_threshold': 0.9
+
          }
     ]
 )
@@ -40,6 +47,7 @@ trainer.train(
 globResponse = ''
 globInput = ''
 bad = []
+user = []
 result = []
 for statement in bot.storage.filter():
     if statement.in_response_to:
@@ -63,13 +71,18 @@ def export_json():
     with open(file_path, 'w+') as jsonfile:
         json.dump(export, jsonfile, ensure_ascii=False)
 
+    file_path='./users.json'
+    import json
+    export = {'conversations': user}
+    with open(file_path, 'w+') as jsonfile:
+        json.dump(export, jsonfile, ensure_ascii=False)   
 
     for i in bad:
        for j in result :
             if j==i:
                 result.remove(j)
 
-    file_path='./tests.json'
+    file_path='./tests1.json'
     import json
     export = {'conversations': result}
     with open(file_path, 'w+') as jsonfile:

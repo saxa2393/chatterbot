@@ -34,7 +34,7 @@ h3 {
 #textInput {
     width: 87%;
     border: none;
-    border-bottom: 3px solid #009688;
+    border-bottom: 3px solid #000000;
     font-family: monospace;
     font-size: 17px;
 }
@@ -60,7 +60,7 @@ h3 {
 }
 
 .userText span {
-    background-color: #009688;
+    background-color: #F44336;
     padding: 10px;
     border-radius: 2px;
 }
@@ -74,9 +74,18 @@ h3 {
 }
 
 .botText span {
-    background-color: #EF5350;
+    background-color: #5072ef;
     padding: 10px;
     border-radius: 2px;
+}
+.botText a {
+    background-color: #5072ef;
+    padding: 10px;
+    border-radius: 2px;
+}
+.link {
+        color: white;
+
 }
 
 #tidbit {
@@ -84,4 +93,54 @@ h3 {
     bottom:0;
     right:0;
     width: 300px;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+
+.rating  {
+  display: inline;
+  position: relative;
+  width: 1.1em;
+}
+.fa.fa-star:hover, .fa.fa-star:hover ~ .fa.fa-star{
+    color:gold;    
+}
+.checked {
+  color: gold;
+}
+
+.styled {
+    
+    display: inline-block
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgba(220, 0, 0, 1);
+    background-image: linear-gradient(to top left,
+                                      rgba(0, 0, 0, .2),
+                                      rgba(0, 0, 0, .2) 30%,
+                                      rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+}
+
+.styled:hover {
+    background-color: rgba(255, 0, 0, 1);
+}
+
+.styled:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
+
+.questions{
+    text-align: center
 }
