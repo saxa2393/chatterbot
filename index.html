@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<html>
+
+<head>
+ <link rel="stylesheet" type="text/css" href="/static/style.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <h1 >Καλώς ήρθατε στο Chatbot του Προγράμματος Μεταπτυχιακών Σπουδών.Τοποθετήστε το ποντίκι στον παρακατω συνδεσμο πριν ξεκινησετε για να δείτε πως λειτουργεί η εφαρμογή
+  </h1>
+ <!--  <h2 class="info">
+  	<a href="">ΕΔΩ
+    	<p>Information</p>
+    </a>
+  </h2>
+ -->
+  	
+  
+  <div id="chat">
+    <div id="chatbox">
+      <p class="botText"><span>Δέχομαι ερωτήσεις σχετικά με το μεταπτυχιακό. Δοκίμασε !</span></p>
+    </div>
+    <div id="userInput">
+      <input id="textInput" onsubmit="return validateForm()" type="text" name="msg" placeholder="Message">
+      <input id="buttonInput" type="submit" value="Send">
+    </div>
+   <!--  <div class="fixed questions">
+      <button class="favorite styled" type="submit" value="Send" id="question1">ποια ειναι τα κριτηρια επιλογης</button>
+      <button class="favorite styled" type="submit" value="Send" id="question2">ποσα χρονια διαρκουν οι σπουδες</button>
+      <button class="favorite styled" type="submit" value="Send" id="question3">ποσο στοιχιζει</button>
+      <button class="favorite styled" type="submit" value="Send" id="question4">ποσα ειναι τα μαθηματα</button>
+      <button class="favorite styled" type="submit" value="Send" id="question5">σε ποιους απευθυνεται</button>
+      <button class="favorite styled" type="submit" value="Send" id="question6">πως μπορω να κανω αιτηση</button>
+      <button class="favorite styled" type="submit" value="Send" id="question7">ποιος ειναι ο τροπος επικοινωνιας</button>
+    </div> -->
+    <script>
+
+      //create a message wrapper to connect easily every QA with a button
+      function createMessageWrapper() {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'wrapper'
+        return wrapper;
+      }
+
+      //create a <span> element inside a <p> element and apende the given text(response)
+      function createText(rawText, className) {
+        var text = document.createElement('p');
+        text.className = className;
+
+        var textSpan = document.createElement('span');
+        textSpan.innerText = rawText;
+
+        $(text).append(textSpan);
+        return text;
+      }
+      
+      //A function to detect and return a link "http:...." inside a text 
+      //To do this we use regular expresion      
+      function urlify(text) {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        var url = text.match(urlRegex);
+        return url;
+      }
+
+
+      // What to do when the user evaluate the answer with 1 or 2 stars . Take userText and botText and send them to python           
+      function onBadBtnClick() {
+        var parent1 = $(this).parent('.rating');
+        var parent = $(parent1).parent('.wrapper');
+        var userText = parent.find('.userText').text();
+        var botText = parent.find('.botText').text();
+
+        $.get("/badResponse", {userText: userText,botText: botText}).done(function (data) {
+
+        });
+      }
+          /* a function that get the feedback from the user(star evaluation 3 stars) and send data to python in order to create the json file */
+          function changeClassName1() {
+            var parent1 = $(this).parent('.rating');
+            var parent = $(parent1).parent('.wrapper');
+            var userText = parent.find('.userText').text();
+            var botText = parent.find('.botText').text();
+
+            var t3 = $(parent1).find('span[data-star="3"]');
+            var t2 = $(parent1).find('span[data-star="2"]');
+            var t1 = $(parent1).find('span[data-star="1"]');
+            $(t1).toggleClass('checked')
+            $(t2).toggleClass('checked')
+            $(t3).toggleClass('checked')
+            $(t3).attr('id','star checked')
+            $(t2).attr('id','star checked')
+            $(t1).attr('id','star checked')
+
+            $(t1).unbind("click");
+            $(t2).unbind("click");
+            $(t3).unbind("click");
+            var x =$(parent1).find('span[class="fa fa-star checked"]');
+            $(x).attr('data-star', '0');
+                        
+            $.get("/userFeedback", {userText: userText,botText: botText,userFeed: '3',}).done(function (data) {
+
+            });            
+
+          }
+         /* a function that get the feedback from the user(star evaluation 2 stars) and send data to python in order to create the json file */
+
+          function changeClassName2() {
+            var parent1 = $(this).parent('.rating');
+            var parent = $(parent1).parent('.wrapper');
+            var userText = parent.find('.userText').text();
+            var botText = parent.find('.botText').text();
+
+            var t3 = $(parent1).find('span[data-star="3"]');
+            var t2 = $(parent1).find('span[data-star="2"]');
+            var t1 = $(parent1).find('span[data-star="1"]');
+        
+            $(t1).toggleClass('checked')
+            $(t2).toggleClass('checked')
+            $(t3).attr('id','star checked')
+            $(t2).attr('id','star checked')
+            $(t1).attr('id','star checked')
+            $(t1).unbind("click");
+            $(t2).unbind("click");
+            $(t3).unbind("click");
+            var x =$(parent1).find('span[class="fa fa-star checked"]');
+            $(x).attr('data-star', '0');
+            var y =$(parent1).find('span[class="fa fa-star"]');
+            $(y).attr('data-star', '0');
+            $.get("/userFeedback", {userText: userText,botText: botText,userFeed: '2',}).done(function (data) {
+
+            });
+          }
+
+          /* a function that get the feedback from the user(star evaluation 1 star) and send data to python in order to create the json file */
+          function changeClassName3() {
+            var parent1 = $(this).parent('.rating');
+            var parent = $(parent1).parent('.wrapper');
+            var userText = parent.find('.userText').text();
+            var botText = parent.find('.botText').text();
+
+            var t3 = $(parent1).find('span[data-star="3"]');
+            var t2 = $(parent1).find('span[data-star="2"]');
+            var t1 = $(parent1).find('span[data-star="1"]');
+            
+            $(t1).toggleClass('checked')
+            $(t3).attr('id','star checked')
+            $(t2).attr('id','star checked')
+            $(t1).attr('id','star checked')
+            $(t1).unbind("click");
+            $(t2).unbind("click");
+            $(t3).unbind("click");
+            var x =$(parent1).find('span[class="fa fa-star checked"]');
+            $(x).attr('data-star', '0');
+            var y =$(parent1).find('span[class="fa fa-star"]');
+            $(y).attr('data-star', '0');
+            $.get("/userFeedback", {userText: userText,botText: botText,userFeed: '1',}).done(function (data) {
+
+            });
+          }
+      // After user input , it creates a  div element to append the input as well as the response
+      // the respone is taken from $.get("/get", { msg: rawText }).done(function (data) through python
+      function getBotResponse() {
+        //takes input from the user      
+        var rawText1 = $("#textInput").val();
+        if (rawText1 == "") {
+          alert("Πρέπει να κάνεις μία ερώτηση");
+          return false;
+        }
+        // Remove accents/diacritics in the string in JavaScript
+        var rawText = rawText1.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+        var wrapper = createMessageWrapper();
+
+        var userText = createText(rawText, 'userText')
+
+        $(wrapper).append($(userText));
+
+        $("#textInput").val("");
+        $("#chatbox").append($(wrapper));
+
+        document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
+
+        $.get("/getResponse", { msg: rawText }).done(function (data) {
+          var myLink = urlify(String(data));
+          var botText = createText(data, 'botText');
+          
+          if (myLink!=null) {
+            var myText = $(botText).find('span').text();
+            var res = myText.replace(String(myLink), " ");
+            console.log(res);
+            $(botText).find('span').text(res);
+            var textLink = document.createElement('a');
+            $(textLink).attr('href', myLink); 
+            $(textLink).attr('class','link'); 
+            $(textLink).attr('target','_blank');
+            $(textLink).text("ΕΔΩ");
+            $($(botText)).append($(textLink));
+          }
+
+          $(wrapper).append($(botText));
+          var sky = document.createElement('div');
+          $(sky).addClass('rating');
+          $(sky).attr('id', 'sky');
+
+
+
+          var star = document.createElement('span');
+          var star1 = document.createElement('span');
+          var star2 = document.createElement('span');
+
+
+          $(star).addClass('fa fa-star');
+          $(star1).addClass('fa fa-star');
+          $(star2).addClass('fa fa-star');
+          $(star2).attr('id','star');
+          $(star1).attr('id','star');
+          $(star).attr('id','star');
+          star.setAttribute('data-star', '3');
+          star1.setAttribute('data-star', '2');
+          star2.setAttribute('data-star', '1');
+
+          $(star).click(changeClassName1)
+          $(star1).click(onBadBtnClick)
+          $(star1).click(changeClassName2)
+          $(star2).click(onBadBtnClick)
+          $(star2).click(changeClassName3)
+
+          $(sky).append($(star));
+          $(sky).append($(star1));
+          $(sky).append($(star2));
+
+          $(wrapper).append($(sky));
+
+          document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
+        });
+
+      }
+      // same function aw the previous but with a given string argument
+      function getQuestion(x) {
+      
+        var rawText = x;
+        var wrapper = createMessageWrapper();
+
+        var userText = createText(rawText, 'userText')
+
+        $(wrapper).append($(userText));
+
+        $("#textInput").val("");
+        $("#chatbox").append($(wrapper));
+
+        document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
+
+        $.get("/getResponse", { msg: rawText }).done(function (data) {
+          var myLink = urlify(String(data));
+          var botText = createText(data, 'botText');
+          
+          if (myLink!=null) {
+            var myText = $(botText).find('span').text();
+            var res = myText.replace(String(myLink), " ");
+            console.log(res);
+            $(botText).find('span').text(res);
+            var textLink = document.createElement('a');
+            $(textLink).attr('href', myLink); 
+            $(textLink).attr('class','link'); 
+            $(textLink).attr('target',"_blank"); 
+
+            $(textLink).text("ΕΔΩ");
+            $($(botText)).append($(textLink));
+          }
+
+          $(wrapper).append($(botText));
+          var sky = document.createElement('div');
+          $(sky).addClass('rating');
+          $(sky).attr('id', 'sky');
+
+          var star = document.createElement('span');
+          var star1 = document.createElement('span');
+          var star2 = document.createElement('span');
+
+          $(star).addClass('fa fa-star');
+          $(star1).addClass('fa fa-star');
+          $(star2).addClass('fa fa-star');
+          $(star2).attr('id','star');
+          $(star1).attr('id','star');
+          $(star).attr('id','star');
+          star.setAttribute('data-star', '3');
+          star1.setAttribute('data-star', '2');
+          star2.setAttribute('data-star', '1');
+
+          $(star).click(changeClassName1)
+          $(star1).click(onBadBtnClick)
+          $(star1).click(changeClassName2)
+          $(star2).click(onBadBtnClick)
+          $(star2).click(changeClassName3)
+
+          $(sky).append($(star));
+          $(sky).append($(star1));
+          $(sky).append($(star2));
+
+          $(wrapper).append($(sky));
+
+          document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
+        });
+
+      }
+
+$("#textInput").keypress(function (e) {
+  if (e.which == 13) {
+    getBotResponse();
+  }
+});
+$("#buttonInput").click(function () {
+  getBotResponse();
+});
+
+// $("#question1").click(function () {
+//   var elem = document.getElementById("question1");
+//   var x = $(elem).text();
+//   getQuestion(x);
+  
+// });
+// $("#question2").click(function () {
+//   var elem = document.getElementById("question2");
+//   var x = $(elem).text();
+//   getQuestion(x);
+  
+// });
+// $("#question3").click(function () {
+//   var elem = document.getElementById("question3");
+//   var x = $(elem).text();
+//   getQuestion(x);
+  
+// });
+// $("#question4").click(function () {
+//   var elem = document.getElementById("question4");
+//   var x = $(elem).text();
+//   getQuestion(x);
+  
+// });
+// $("#question5").click(function () {
+//   var elem = document.getElementById("question5");
+//   var x = $(elem).text();
+//   getQuestion(x);
+  
+// });
+// $("#question6").click(function () {
+//   var elem = document.getElementById("question6");
+//   var x = $(elem).text();
+//   getQuestion(x);
+  
+// });
+// $("#question7").click(function () {
+//   var elem = document.getElementById("question7");
+//   var x = $(elem).text();
+//   getQuestion(x);
+  
+// });
+</script>
+</div>
+</body>
+
+</html>
