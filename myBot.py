@@ -62,19 +62,19 @@ def export_json():
     file_path='./result.json'
     import json
     export = {'conversations': result}
-    with open(file_path, 'w+') as jsonfile:
+    with open(file_path, 'w+', encoding='utf-8') as jsonfile:
         json.dump(export, jsonfile, ensure_ascii=False)
 
     file_path='./bad.json'
     import json
     export = {'conversations': bad}
-    with open(file_path, 'w+') as jsonfile:
+    with open(file_path, 'w+', encoding='utf-8') as jsonfile:
         json.dump(export, jsonfile, ensure_ascii=False)
 
     file_path='./users.json'
     import json
     export = {'conversations': user}
-    with open(file_path, 'w+') as jsonfile:
+    with open(file_path, 'w+', encoding='utf-8') as jsonfile:
         json.dump(export, jsonfile, ensure_ascii=False)   
 
     for i in bad:
@@ -85,5 +85,5 @@ def export_json():
     file_path='./tests1.json'
     import json
     export = {'conversations': result}
-    with open(file_path, 'w+') as jsonfile:
+    with open(file_path, 'w+', encoding='utf-8') as jsonfile:
         json.dump(export, jsonfile, ensure_ascii=False)
