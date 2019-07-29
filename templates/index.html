@@ -8,16 +8,12 @@
 </head>
 
 <body>
-  <h1 >Καλώς ήρθατε στο Chatbot του Προγράμματος Μεταπτυχιακών Σπουδών.Τοποθετήστε το ποντίκι στον παρακατω συνδεσμο πριν ξεκινησετε για να δείτε πως λειτουργεί η εφαρμογή
-  </h1>
- <!--  <h2 class="info">
-  	<a href="">ΕΔΩ
-    	<p>Information</p>
-    </a>
-  </h2>
+<!--   <h1 >Καλώς ήρθατε στο Chatbot του Προγράμματος Μεταπτυχιακών Σπουδών.</h1>
  -->
-  	
-  
+
+  <div class="tooltip">Chatbot Μεταπτυχιακου
+      <span class="tooltiptext">Μπορείτε να κάνετε ερωτήσεις σχετικά με το Μεταπτυχιακό του ΑΠΘ, σχετικά με τα μαθήματα, τα έξοδα φοίτησης κτλπ. Επίσης θα ήταν καλό να βαθμολογήσετε από 1 εώς 3 το κατά πόσο η απάντηση ήταν ικανοποιητική.</span>
+    </div>
   <div id="chat">
     <div id="chatbox">
       <p class="botText"><span>Δέχομαι ερωτήσεις σχετικά με το μεταπτυχιακό. Δοκίμασε !</span></p>
@@ -76,89 +72,89 @@
 
         });
       }
-          /* a function that get the feedback from the user(star evaluation 3 stars) and send data to python in order to create the json file */
-          function changeClassName1() {
-            var parent1 = $(this).parent('.rating');
-            var parent = $(parent1).parent('.wrapper');
-            var userText = parent.find('.userText').text();
-            var botText = parent.find('.botText').text();
+      /* a function that get the feedback from the user(star evaluation 3 stars) and send data to python in order to create the json file */
+      function changeClassName1() {
+        var parent1 = $(this).parent('.rating');
+        var parent = $(parent1).parent('.wrapper');
+        var userText = parent.find('.userText').text();
+        var botText = parent.find('.botText').text();
 
-            var t3 = $(parent1).find('span[data-star="3"]');
-            var t2 = $(parent1).find('span[data-star="2"]');
-            var t1 = $(parent1).find('span[data-star="1"]');
-            $(t1).toggleClass('checked')
-            $(t2).toggleClass('checked')
-            $(t3).toggleClass('checked')
-            $(t3).attr('id','star checked')
-            $(t2).attr('id','star checked')
-            $(t1).attr('id','star checked')
+        var t3 = $(parent1).find('span[data-star="3"]');
+        var t2 = $(parent1).find('span[data-star="2"]');
+        var t1 = $(parent1).find('span[data-star="1"]');
+        $(t1).toggleClass('checked')
+        $(t2).toggleClass('checked')
+        $(t3).toggleClass('checked')
+        $(t3).attr('id','star checked')
+        $(t2).attr('id','star checked')
+        $(t1).attr('id','star checked')
 
-            $(t1).unbind("click");
-            $(t2).unbind("click");
-            $(t3).unbind("click");
-            var x =$(parent1).find('span[class="fa fa-star checked"]');
-            $(x).attr('data-star', '0');
-                        
-            $.get("/userFeedback", {userText: userText,botText: botText,userFeed: '3',}).done(function (data) {
+        $(t1).unbind("click");
+        $(t2).unbind("click");
+        $(t3).unbind("click");
+        var x =$(parent1).find('span[class="fa fa-star checked"]');
+        $(x).attr('data-star', '0');
 
-            });            
+        $.get("/userFeedback", {userText: userText,botText: botText,userFeed: '3',}).done(function (data) {
 
-          }
-         /* a function that get the feedback from the user(star evaluation 2 stars) and send data to python in order to create the json file */
+        });            
 
-          function changeClassName2() {
-            var parent1 = $(this).parent('.rating');
-            var parent = $(parent1).parent('.wrapper');
-            var userText = parent.find('.userText').text();
-            var botText = parent.find('.botText').text();
+      }
+      /* a function that get the feedback from the user(star evaluation 2 stars) and send data to python in order to create the json file */
 
-            var t3 = $(parent1).find('span[data-star="3"]');
-            var t2 = $(parent1).find('span[data-star="2"]');
-            var t1 = $(parent1).find('span[data-star="1"]');
+      function changeClassName2() {
+        var parent1 = $(this).parent('.rating');
+        var parent = $(parent1).parent('.wrapper');
+        var userText = parent.find('.userText').text();
+        var botText = parent.find('.botText').text();
+
+        var t3 = $(parent1).find('span[data-star="3"]');
+        var t2 = $(parent1).find('span[data-star="2"]');
+        var t1 = $(parent1).find('span[data-star="1"]');
         
-            $(t1).toggleClass('checked')
-            $(t2).toggleClass('checked')
-            $(t3).attr('id','star checked')
-            $(t2).attr('id','star checked')
-            $(t1).attr('id','star checked')
-            $(t1).unbind("click");
-            $(t2).unbind("click");
-            $(t3).unbind("click");
-            var x =$(parent1).find('span[class="fa fa-star checked"]');
-            $(x).attr('data-star', '0');
-            var y =$(parent1).find('span[class="fa fa-star"]');
-            $(y).attr('data-star', '0');
-            $.get("/userFeedback", {userText: userText,botText: botText,userFeed: '2',}).done(function (data) {
+        $(t1).toggleClass('checked')
+        $(t2).toggleClass('checked')
+        $(t3).attr('id','star checked')
+        $(t2).attr('id','star checked')
+        $(t1).attr('id','star checked')
+        $(t1).unbind("click");
+        $(t2).unbind("click");
+        $(t3).unbind("click");
+        var x =$(parent1).find('span[class="fa fa-star checked"]');
+        $(x).attr('data-star', '0');
+        var y =$(parent1).find('span[class="fa fa-star"]');
+        $(y).attr('data-star', '0');
+        $.get("/userFeedback", {userText: userText,botText: botText,userFeed: '2',}).done(function (data) {
 
-            });
-          }
+        });
+      }
 
-          /* a function that get the feedback from the user(star evaluation 1 star) and send data to python in order to create the json file */
-          function changeClassName3() {
-            var parent1 = $(this).parent('.rating');
-            var parent = $(parent1).parent('.wrapper');
-            var userText = parent.find('.userText').text();
-            var botText = parent.find('.botText').text();
+      /* a function that get the feedback from the user(star evaluation 1 star) and send data to python in order to create the json file */
+      function changeClassName3() {
+        var parent1 = $(this).parent('.rating');
+        var parent = $(parent1).parent('.wrapper');
+        var userText = parent.find('.userText').text();
+        var botText = parent.find('.botText').text();
 
-            var t3 = $(parent1).find('span[data-star="3"]');
-            var t2 = $(parent1).find('span[data-star="2"]');
-            var t1 = $(parent1).find('span[data-star="1"]');
-            
-            $(t1).toggleClass('checked')
-            $(t3).attr('id','star checked')
-            $(t2).attr('id','star checked')
-            $(t1).attr('id','star checked')
-            $(t1).unbind("click");
-            $(t2).unbind("click");
-            $(t3).unbind("click");
-            var x =$(parent1).find('span[class="fa fa-star checked"]');
-            $(x).attr('data-star', '0');
-            var y =$(parent1).find('span[class="fa fa-star"]');
-            $(y).attr('data-star', '0');
-            $.get("/userFeedback", {userText: userText,botText: botText,userFeed: '1',}).done(function (data) {
+        var t3 = $(parent1).find('span[data-star="3"]');
+        var t2 = $(parent1).find('span[data-star="2"]');
+        var t1 = $(parent1).find('span[data-star="1"]');
 
-            });
-          }
+        $(t1).toggleClass('checked')
+        $(t3).attr('id','star checked')
+        $(t2).attr('id','star checked')
+        $(t1).attr('id','star checked')
+        $(t1).unbind("click");
+        $(t2).unbind("click");
+        $(t3).unbind("click");
+        var x =$(parent1).find('span[class="fa fa-star checked"]');
+        $(x).attr('data-star', '0');
+        var y =$(parent1).find('span[class="fa fa-star"]');
+        $(y).attr('data-star', '0');
+        $.get("/userFeedback", {userText: userText,botText: botText,userFeed: '1',}).done(function (data) {
+
+        });
+      }
       // After user input , it creates a  div element to append the input as well as the response
       // the respone is taken from $.get("/get", { msg: rawText }).done(function (data) through python
       function getBotResponse() {
@@ -238,7 +234,7 @@
       }
       // same function aw the previous but with a given string argument
       function getQuestion(x) {
-      
+
         var rawText = x;
         var wrapper = createMessageWrapper();
 
@@ -257,7 +253,7 @@
           
           if (myLink!=null) {
             var myText = $(botText).find('span').text();
-            var res = myText.replace(String(myLink), " ");
+            var res = myText.replace(String(myLink), " hello ");
             console.log(res);
             $(botText).find('span').text(res);
             var textLink = document.createElement('a');
@@ -265,10 +261,9 @@
             $(textLink).attr('class','link'); 
             $(textLink).attr('target',"_blank"); 
 
-            $(textLink).text("ΕΔΩ");
-            $($(botText)).append($(textLink));
+            $(botText).find('span').After(textLink);
           }
-
+          // $(botText).find('span').text(res+textLink);
           $(wrapper).append($(botText));
           var sky = document.createElement('div');
           $(sky).addClass('rating');
@@ -305,56 +300,56 @@
 
       }
 
-$("#textInput").keypress(function (e) {
-  if (e.which == 13) {
-    getBotResponse();
-  }
-});
-$("#buttonInput").click(function () {
-  getBotResponse();
-});
+      $("#textInput").keypress(function (e) {
+        if (e.which == 13) {
+          getBotResponse();
+        }
+      });
+      $("#buttonInput").click(function () {
+        getBotResponse();
+      });
 
 // $("#question1").click(function () {
 //   var elem = document.getElementById("question1");
 //   var x = $(elem).text();
 //   getQuestion(x);
-  
+
 // });
 // $("#question2").click(function () {
 //   var elem = document.getElementById("question2");
 //   var x = $(elem).text();
 //   getQuestion(x);
-  
+
 // });
 // $("#question3").click(function () {
 //   var elem = document.getElementById("question3");
 //   var x = $(elem).text();
 //   getQuestion(x);
-  
+
 // });
 // $("#question4").click(function () {
 //   var elem = document.getElementById("question4");
 //   var x = $(elem).text();
 //   getQuestion(x);
-  
+
 // });
 // $("#question5").click(function () {
 //   var elem = document.getElementById("question5");
 //   var x = $(elem).text();
 //   getQuestion(x);
-  
+
 // });
 // $("#question6").click(function () {
 //   var elem = document.getElementById("question6");
 //   var x = $(elem).text();
 //   getQuestion(x);
-  
+
 // });
 // $("#question7").click(function () {
 //   var elem = document.getElementById("question7");
 //   var x = $(elem).text();
 //   getQuestion(x);
-  
+
 // });
 </script>
 </div>
