@@ -8,12 +8,9 @@
 </head>
 
 <body>
-<!--   <h1 >Καλώς ήρθατε στο Chatbot του Προγράμματος Μεταπτυχιακών Σπουδών.</h1>
- -->
-
   <div class="tooltip">Chatbot Μεταπτυχιακου
-      <span class="tooltiptext">Μπορείτε να κάνετε ερωτήσεις σχετικά με το Μεταπτυχιακό του ΑΠΘ, σχετικά με τα μαθήματα, τα έξοδα φοίτησης κτλπ. Επίσης θα ήταν καλό να βαθμολογήσετε από 1 εώς 3 το κατά πόσο η απάντηση ήταν ικανοποιητική.</span>
-    </div>
+    <span class="tooltiptext">Μπορείτε να κάνετε ερωτήσεις σχετικά με το Μεταπτυχιακό του ΑΠΘ, σχετικά με τα μαθήματα, τα έξοδα φοίτησης κτλπ. Επίσης θα ήταν καλό να βαθμολογήσετε από 1 εώς 3 το κατά πόσο η απάντηση ήταν ικανοποιητική.</span>
+  </div>
   <div id="chat">
     <div id="chatbox">
       <p class="botText"><span>Δέχομαι ερωτήσεις σχετικά με το μεταπτυχιακό. Δοκίμασε !</span></p>
@@ -22,15 +19,7 @@
       <input id="textInput" onsubmit="return validateForm()" type="text" name="msg" placeholder="Message">
       <input id="buttonInput" type="submit" value="Send">
     </div>
-   <!--  <div class="fixed questions">
-      <button class="favorite styled" type="submit" value="Send" id="question1">ποια ειναι τα κριτηρια επιλογης</button>
-      <button class="favorite styled" type="submit" value="Send" id="question2">ποσα χρονια διαρκουν οι σπουδες</button>
-      <button class="favorite styled" type="submit" value="Send" id="question3">ποσο στοιχιζει</button>
-      <button class="favorite styled" type="submit" value="Send" id="question4">ποσα ειναι τα μαθηματα</button>
-      <button class="favorite styled" type="submit" value="Send" id="question5">σε ποιους απευθυνεται</button>
-      <button class="favorite styled" type="submit" value="Send" id="question6">πως μπορω να κανω αιτηση</button>
-      <button class="favorite styled" type="submit" value="Send" id="question7">ποιος ειναι ο τροπος επικοινωνιας</button>
-    </div> -->
+
     <script>
 
       //create a message wrapper to connect easily every QA with a button
@@ -190,8 +179,10 @@
             $(textLink).attr('href', myLink); 
             $(textLink).attr('class','link'); 
             $(textLink).attr('target','_blank');
-            $(textLink).text("ΕΔΩ");
-            $($(botText)).append($(textLink));
+            $(textLink).text("Αναλυτικά ΕΔΩ");
+            $(botText).append($(textLink));
+            // $(wrapper).append("<span class='botText' text="+">"+"<a href=" + myLink + " class='link'>"+"test"+"</a>"+"</span>");
+
           }
 
           $(wrapper).append($(botText));
@@ -232,74 +223,6 @@
         });
 
       }
-      // same function aw the previous but with a given string argument
-      function getQuestion(x) {
-
-        var rawText = x;
-        var wrapper = createMessageWrapper();
-
-        var userText = createText(rawText, 'userText')
-
-        $(wrapper).append($(userText));
-
-        $("#textInput").val("");
-        $("#chatbox").append($(wrapper));
-
-        document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
-
-        $.get("/getResponse", { msg: rawText }).done(function (data) {
-          var myLink = urlify(String(data));
-          var botText = createText(data, 'botText');
-          
-          if (myLink!=null) {
-            var myText = $(botText).find('span').text();
-            var res = myText.replace(String(myLink), " hello ");
-            console.log(res);
-            $(botText).find('span').text(res);
-            var textLink = document.createElement('a');
-            $(textLink).attr('href', myLink); 
-            $(textLink).attr('class','link'); 
-            $(textLink).attr('target',"_blank"); 
-
-            $(botText).find('span').After(textLink);
-          }
-          // $(botText).find('span').text(res+textLink);
-          $(wrapper).append($(botText));
-          var sky = document.createElement('div');
-          $(sky).addClass('rating');
-          $(sky).attr('id', 'sky');
-
-          var star = document.createElement('span');
-          var star1 = document.createElement('span');
-          var star2 = document.createElement('span');
-
-          $(star).addClass('fa fa-star');
-          $(star1).addClass('fa fa-star');
-          $(star2).addClass('fa fa-star');
-          $(star2).attr('id','star');
-          $(star1).attr('id','star');
-          $(star).attr('id','star');
-          star.setAttribute('data-star', '3');
-          star1.setAttribute('data-star', '2');
-          star2.setAttribute('data-star', '1');
-
-          $(star).click(changeClassName1)
-          $(star1).click(onBadBtnClick)
-          $(star1).click(changeClassName2)
-          $(star2).click(onBadBtnClick)
-          $(star2).click(changeClassName3)
-
-          $(sky).append($(star));
-          $(sky).append($(star1));
-          $(sky).append($(star2));
-
-          $(wrapper).append($(sky));
-
-          document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
-        });
-
-      }
-
       $("#textInput").keypress(function (e) {
         if (e.which == 13) {
           getBotResponse();
@@ -309,48 +232,6 @@
         getBotResponse();
       });
 
-// $("#question1").click(function () {
-//   var elem = document.getElementById("question1");
-//   var x = $(elem).text();
-//   getQuestion(x);
-
-// });
-// $("#question2").click(function () {
-//   var elem = document.getElementById("question2");
-//   var x = $(elem).text();
-//   getQuestion(x);
-
-// });
-// $("#question3").click(function () {
-//   var elem = document.getElementById("question3");
-//   var x = $(elem).text();
-//   getQuestion(x);
-
-// });
-// $("#question4").click(function () {
-//   var elem = document.getElementById("question4");
-//   var x = $(elem).text();
-//   getQuestion(x);
-
-// });
-// $("#question5").click(function () {
-//   var elem = document.getElementById("question5");
-//   var x = $(elem).text();
-//   getQuestion(x);
-
-// });
-// $("#question6").click(function () {
-//   var elem = document.getElementById("question6");
-//   var x = $(elem).text();
-//   getQuestion(x);
-
-// });
-// $("#question7").click(function () {
-//   var elem = document.getElementById("question7");
-//   var x = $(elem).text();
-//   getQuestion(x);
-
-// });
 </script>
 </div>
 </body>
