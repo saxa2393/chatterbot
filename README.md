@@ -1,4 +1,4 @@
-This app use the pyhton library chatterbot to give users response based on their questions.
+This app use the python library chatterbot to give users response based on their questions.
 This project is in progress for a thesis at computer department of AUTH.
 The language is greek but can easily modified.
 There is a star system evaluation in order to collect feedback from the users.
