@@ -92,14 +92,7 @@ h2 {
     padding-left: 1px;
 }
 .botText a {
-	text-decoration: none;
-    background-color: #5072ef;
-    padding: 10px;
-    display: inline-block;
-    text-align: center;
-    border-radius: 50px;
-    margin-top :5px
-
+    text-decoration: none;
 }
 .link {
     color: white;
