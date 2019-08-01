@@ -138,7 +138,7 @@ h2 {
 .tooltip .tooltiptext {
 
   visibility: hidden;
-  width: 500px;
+  width: 300px;
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -146,12 +146,12 @@ h2 {
   padding: 5px 0;
   position: absolute;
   z-index: 1;
-  bottom: 50%;
+  bottom: 0%;
   left: 125%;
   margin-left: -60px;
   opacity: 0;
   transition: opacity 0.3s;
-    font-size: 20px;
+  font-size: 15px;
 
 }
 
