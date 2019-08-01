@@ -9,7 +9,7 @@
 
 <body>
   <div class="tooltip">Chatbot Μεταπτυχιακου
-    <span class="tooltiptext">Μπορείτε να κάνετε ερωτήσεις σχετικά με το Μεταπτυχιακό του ΑΠΘ, σχετικά με τα μαθήματα, τα έξοδα φοίτησης κτλπ. Επίσης θα ήταν καλό να βαθμολογήσετε από 1 εώς 3 το κατά πόσο η απάντηση ήταν ικανοποιητική.</span>
+    <span class="tooltiptext">Το Chatbot δέχετε ερωτήσεις για το Μεταπτυχιακό του ΑΠΘ, σχετικά με τα μαθήματα, τα έξοδα φοίτησης, τη διαρκεια σπουδών κτλπ. Επίσης ανάλογα με το βαθμό που ικανοποιηθήκατε από την απάντηση μπορείτε να τη βαθμολογήσετε με 1 εώς 3 αστέρια.</span>
   </div>
   <div id="chat">
     <div id="chatbox">
@@ -173,16 +173,7 @@
           if (myLink!=null) {
             var myText = $(botText).find('span').text();
             var res = myText.replace(String(myLink), " ");
-            console.log(res);
-            $(botText).find('span').text(res);
-            var textLink = document.createElement('a');
-            $(textLink).attr('href', myLink); 
-            $(textLink).attr('class','link'); 
-            $(textLink).attr('target','_blank');
-            $(textLink).text("Αναλυτικά ΕΔΩ");
-            $(botText).append($(textLink));
-            // $(wrapper).append("<span class='botText' text="+">"+"<a href=" + myLink + " class='link'>"+"test"+"</a>"+"</span>");
-
+            $(botText).html("<span>"+ res +"<a href='" + myLink + "' class='link' target='_blank'>"+"ΕΔΩ"+"</a></span>");
           }
 
           $(wrapper).append($(botText));
