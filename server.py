@@ -13,12 +13,15 @@ import requests
 from myBot import *
 import re  
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='', 
+            static_folder='web/static',
+            template_folder='web/templates')
 
 # a list of stepwords and common used words for this chatbot. These words are removed from every sentence
 # before we take the response. With this way we try to increase the confidence value in every response
 # It's a way to solve the problem of chatterbot library due to the use of Greek language
-delete_list = [" ο ", " η ", " το "," την "," τη "," τον "," τα ", " για ", " τι "," τις "," να "," τη ", " ειναι "," σε ", " του ","Σε ", "Τι ",
+delete_list = [" ο ", " η ", " το "," την "," τη "," τον "," τα ", " για "," τις "," τι "," να "," τη ", " ειναι "," σε ", " του ","Σε ", "Τι ",
 " πρεπει ", " καποιος ", " καποια ", " καποιο ", " κατι ", " στο ", " στη ", " στην ", " στα ", " στους "," στον ", " οι "," θελω ", 
  " ηθελα ", " μεταπτυχιακου"," μεταπτυχιακο"," μεταπτυχιακο ", " με ", " και "]
 

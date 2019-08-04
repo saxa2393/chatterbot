@@ -1,26 +1,3 @@
-<!DOCTYPE html>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<html>
-
-<head>
- <link rel="stylesheet" type="text/css" href="/static/style.css">
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
-
-<body>
-  <div class="tooltip">Chatbot Μεταπτυχιακου
-    <span class="tooltiptext">Το Chatbot δέχετε ερωτήσεις για το Μεταπτυχιακό του ΑΠΘ, σχετικά με τα μαθήματα, τα έξοδα φοίτησης, τη διαρκεια σπουδών κτλπ. Επίσης ανάλογα με το βαθμό που ικανοποιηθήκατε από την απάντηση μπορείτε να τη βαθμολογήσετε με 1 εώς 3 αστέρια.</span>
-  </div>
-  <div id="chat">
-    <div id="chatbox">
-      <p class="botText"><span>Δέχομαι ερωτήσεις σχετικά με το μεταπτυχιακό. Δοκίμασε !</span></p>
-    </div>
-    <div id="userInput">
-      <input id="textInput" onsubmit="return validateForm()" type="text" name="msg" placeholder="Message">
-      <input id="buttonInput" type="submit" value="Send">
-    </div>
-
-    <script>
 
       //create a message wrapper to connect easily every QA with a button
       function createMessageWrapper() {
@@ -223,8 +200,3 @@
         getBotResponse();
       });
 
-</script>
-</div>
-</body>
-
-</html>
