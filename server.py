@@ -35,16 +35,15 @@ def get_bot_response():
     global globResponse
     global globInput
     userText = request.args.get('msg')
-    userText1 = ' ' + userText # problem with  " ποιο " or  "ποιο " , space sensitive at the beggining of every sentence
 
     # remove from user input the words that exist in array delete_list
     i=0;
     while i<len(delete_list):
-        userText1 = re.sub(str(delete_list[i]), " ", userText1)
+        userText = re.sub(str(delete_list[i]), " ", userText)
         i += 1
 
-    globInput = userText1
-    getResp = bot.get_response(userText1)
+    globInput = userText
+    getResp = bot.get_response(userText)
     conf=getResp.confidence
     print(conf)
     if conf > 0.35 :
