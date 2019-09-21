@@ -71,7 +71,7 @@ h2 {
     padding: 10px;
     display: inline-block;
     text-align: center;
-    border-radius: 50px;
+    border-radius: 15px;
     padding-left: 10px;
 }
 .botText {
@@ -88,11 +88,11 @@ h2 {
     padding: 10px;
     display: inline-block;
     text-align: center;
-    border-radius: 50px;
+    border-radius: 15px;
     padding-left: 10px;
 }
 .botText a {
-    text-decoration: none;
+    text-decoration: underline;
 }
 .link {
     color: white;
